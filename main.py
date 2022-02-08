@@ -7,7 +7,9 @@ train_files = glob.glob(train_path + "person-*/*.png")
 
 
 def run():
-	merger = Merger()
+	img_shape = (116, 120)
+	batch_size = 1
+	merger = Merger(img_shape, batch_size)
 	for infile in train_files:
 		try:
 			with Image.open(infile) as im:
@@ -19,3 +21,7 @@ def run():
 				pil_img = Image.fromarray(av_img, mode="L")
 		except OSError:
 			pass
+	pil_img.save("average_image.png")
+
+if __name__ == "__main__":
+	run()
