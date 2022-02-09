@@ -1,7 +1,8 @@
 import unittest
-from merger import Merger
 from PIL import Image
 import numpy as np
+
+from merger import Merger
 
 
 class TestMerging(unittest.TestCase):
