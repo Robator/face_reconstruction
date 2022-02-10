@@ -1,5 +1,7 @@
 import glob
 from PIL import Image
+import os
+
 from merger import Merger
 from reconstructor import Reconstructor
 
@@ -28,7 +30,7 @@ def create_average_image(train_path):
 		pil_img.save("average_image.png")
 
 
-def reconstruct_images(test_path):
+def reconstruct_images(test_path, out_path="./reconstructed/"):
 	test_files = get_img_list(test_path)
 
 	img_shape = (116, 120)  # cols, rows
@@ -41,7 +43,10 @@ def reconstruct_images(test_path):
 					print("Expected 8-bit pixels, black and white image. Exiting...")
 					exit(1)
 				reconstructed_img = reconstructor.process_img(im)
-				reconstructed_img.save("." + infile.split(".")[1] + "_reconstructed.png")
+
+				path = out_path + infile.split("/")[-2] + "/"
+				os.makedirs(path) if not os.path.exists(path) else None
+				reconstructed_img.save(path + infile.split("/")[-1])
 		except OSError:
 			pass
 
@@ -49,10 +54,11 @@ def reconstruct_images(test_path):
 
 if __name__ == "__main__":
 	train = False
-	train_path = "./db_dep/train/"
-	test_path = "./db_dep/test/"
+	train_path = "./dataset/train/"
+	test_path = "./dataset/test/"
+	out_path = "./dataset/reconstructed/"
 
 	if train:
 		create_average_image(train_path)
 	else:
-		reconstruct_images(test_path)
+		reconstruct_images(test_path, out_path)

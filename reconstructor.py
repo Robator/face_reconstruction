@@ -36,13 +36,16 @@ class Reconstructor:
 
 	def process_img(self, img):
 		"""
-		Reconstruct given image.
+		Reconstruct given image. Iterate over pixels and if one is equal to 255,
+		try to replace it with the symmetrical one or from an average image
 		:param img: pillow image
 		:return: reconstructed png image
 		"""
 		img_array = np.asarray(img).copy()
 		for col in range(self.shape[0]):
 			for row in range(self.shape[1]):
+				if img_array[row, col] != 255:
+					continue
 				symmetric_col = self.get_symmetric_column(col)
 				if img_array[row, symmetric_col] != 255:
 					img_array[row, col] = img_array[row, symmetric_col]
