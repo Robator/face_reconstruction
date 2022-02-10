@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Reconstructor:
-	def __init__(self, shape, av_img_name):
+	def __init__(self, shape, av_img_name="average_image/average_image.png"):
 		self.shape = shape
 		self.avg_array = self.load_avg_image(av_img_name)
 

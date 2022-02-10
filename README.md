@@ -32,7 +32,12 @@ To install dependencies run the following command:
     pip install -r requirements.txt
 
 # How to run
-To create average image run
+
+To run tests run from the root directory:
+
+    ./scripts/tests.sh
+
+To create average image run:
 
     python main.py train /path/to/trainfolder
 

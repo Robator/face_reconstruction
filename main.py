@@ -27,14 +27,14 @@ def create_average_image(train_path):
 			pass
 	if len(train_files) > 0:
 		pil_img = Image.fromarray(av_img, mode="L")
-		pil_img.save("average_image.png")
+		pil_img.save("average_image/average_image.png")
 
 
 def reconstruct_images(test_path, out_path="./reconstructed/"):
 	test_files = get_img_list(test_path)
 
 	img_shape = (116, 120)  # cols, rows
-	reconstructor = Reconstructor(img_shape, "average_image.png")
+	reconstructor = Reconstructor(img_shape)
 
 	for infile in test_files:
 		try:
