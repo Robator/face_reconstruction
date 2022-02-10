@@ -28,6 +28,7 @@ def create_average_image(train_path):
 			pass
 	if len(train_files) > 0:
 		pil_img = Image.fromarray(av_img, mode="L")
+		os.mkdir("average_image") if not os.path.exists("average_image") else None
 		pil_img.save("average_image/average_image.png")
 
 
