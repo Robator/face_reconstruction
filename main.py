@@ -1,3 +1,4 @@
+import argparse
 import glob
 from PIL import Image
 import os
@@ -7,7 +8,7 @@ from reconstructor import Reconstructor
 
 
 def get_img_list(path):
-	return glob.glob(path + "person-*/*.png")
+	return glob.glob(path + "/" + "person-*/*.png")
 
 
 def create_average_image(train_path):
@@ -30,7 +31,7 @@ def create_average_image(train_path):
 		pil_img.save("average_image/average_image.png")
 
 
-def reconstruct_images(test_path, out_path="./reconstructed/"):
+def reconstruct_images(test_path, out_path):
 	test_files = get_img_list(test_path)
 
 	img_shape = (116, 120)  # cols, rows
@@ -44,21 +45,31 @@ def reconstruct_images(test_path, out_path="./reconstructed/"):
 					exit(1)
 				reconstructed_img = reconstructor.process_img(im)
 
-				path = out_path + infile.split("/")[-2] + "/"
+				path = out_path + "/" + infile.split("/")[-2]
 				os.makedirs(path) if not os.path.exists(path) else None
-				reconstructed_img.save(path + infile.split("/")[-1])
+				reconstructed_img.save(path + "/" + infile.split("/")[-1])
 		except OSError:
 			pass
 
 
 
 if __name__ == "__main__":
-	train = False
-	train_path = "./dataset/train/"
-	test_path = "./dataset/test/"
-	out_path = "./dataset/reconstructed/"
+	parser = argparse.ArgumentParser(description='Reconstruct missing parts on depth images of '
+												 'human faces. Run training or inference.')
 
-	if train:
-		create_average_image(train_path)
+	parser.add_argument('run_type',
+						choices=["train", "test"],
+						help='equals to test or train')
+
+	parser.add_argument('path',
+						help='path to train or test dataset')
+
+	parser.add_argument('--out',
+						help='output directory for inference results',
+						default="dataset/reconstructed")
+	args = parser.parse_args()
+
+	if args.run_type == "train":
+		create_average_image(args.path)
 	else:
-		reconstruct_images(test_path, out_path)
+		reconstruct_images(args.path, args.out)

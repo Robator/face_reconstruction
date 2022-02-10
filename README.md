@@ -15,10 +15,10 @@ reconstructed representation.
 
 |               Original image                |              Reconstructed using symmetry               |         Reconstructed using average image  <br/>and symmetry          |
 |:-------------------------------------------:|:-------------------------------------------------------:|:---------------------------------------------------:|
-| ![](dataset/test/person-17/frame11_dep.png) | ![](images_reconstructed/person-17/frame11_dep_sym.png) | ![](images_reconstructed/person-17/frame11_dep.png) |
-| ![](dataset/test/person-18/frame11_dep.png) | ![](images_reconstructed/person-18/frame11_dep_sym.png) | ![](images_reconstructed/person-18/frame11_dep.png) |
-| ![](dataset/test/person-19/frame11_dep.png) | ![](images_reconstructed/person-19/frame11_dep_sym.png) | ![](images_reconstructed/person-19/frame11_dep.png) |
-| ![](dataset/test/person-20/frame11_dep.png) | ![](images_reconstructed/person-20/frame11_dep_sym.png) | ![](images_reconstructed/person-20/frame11_dep.png) |
+| ![](dataset/test/person-17/frame11_dep.png) | ![](images_readme/person-17/frame11_dep_sym.png) | ![](images_readme/person-17/frame11_dep.png) |
+| ![](dataset/test/person-18/frame11_dep.png) | ![](images_readme/person-18/frame11_dep_sym.png) | ![](images_readme/person-18/frame11_dep.png) |
+| ![](dataset/test/person-19/frame11_dep.png) | ![](images_readme/person-19/frame11_dep_sym.png) | ![](images_readme/person-19/frame11_dep.png) |
+| ![](dataset/test/person-20/frame11_dep.png) | ![](images_readme/person-20/frame11_dep_sym.png) | ![](images_readme/person-20/frame11_dep.png) |
 
 # Requirements
 - Ubuntu 18.04
@@ -39,11 +39,11 @@ To run tests run from the root directory:
 
 To create average image run:
 
-    python main.py train /path/to/trainfolder
+    python main.py train dataset/train
 
-To reconstruct images in test folder run and store results in /path/out folder run:
+To reconstruct images in test folder run and store results in dataset/rec_images folder run:
 
-    python main.py test /path/to/testfolder --out=/path/out
+    python main.py test dataset/test --out=dataset/rec_images
 
 # Algorithm description
 When train is launched, an average image is created in the following way. At the first iteration, the average image 
@@ -54,6 +54,6 @@ current(or batch) and average image are calculated for each image in dataset.
 When inferencing, the algorithm tries to replace white areas. For each such pixel symmetrical to vertical image line pixel
 value is used if it is not white otherwise value from an average image.
 
-#Limitations
-- In case an image to reconstruct is wider than an average image and the missing area is in that place, hollows may 
-appear (shown in reconstruction example)
+# Limitations
+- In case face on an image to reconstruct is wider than on an average one and the missing area is in that place, hollows
+may appear

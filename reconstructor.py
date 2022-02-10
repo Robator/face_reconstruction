@@ -21,7 +21,7 @@ class Reconstructor:
 					return None
 				return np.asarray(im)
 		except FileNotFoundError:
-			print(f"{av_img_name} is not found... Continue")
+			print(f"{av_img_name} is not found... Using only symmetry")
 			return None
 
 	def get_symmetric_column(self, cur_col):
