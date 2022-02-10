@@ -38,23 +38,23 @@ class Merger:
 		if self.average_image is None:
 			self.average_image = self.sum_image
 
-		nonzero_values_ids = np.where(self.sum_image < 255)
+		nonwhite_px_ids = np.where(self.sum_image < 255)
 
 		# apply mask
-		intersection_mask = self.find_intersection_by_ids(nonzero_values_ids)
-		nonzero_values_ids_x, nonzero_values_ids_y = nonzero_values_ids
-		nonzero_values_ids_x = nonzero_values_ids_x[intersection_mask]
-		nonzero_values_ids_y = nonzero_values_ids_y[intersection_mask]
-		nonzero_values_ids = (nonzero_values_ids_x, nonzero_values_ids_y)
+		intersection_mask = self.find_intersection_by_ids(nonwhite_px_ids)
+		nonwhite_px_ids_x, nonwhite_px_ids_y = nonwhite_px_ids
+		nonwhite_px_ids_x = nonwhite_px_ids_x[intersection_mask]
+		nonwhite_px_ids_y = nonwhite_px_ids_y[intersection_mask]
+		nonwhite_px_ids = (nonwhite_px_ids_x, nonwhite_px_ids_y)
 
 		# take chosen values of current image
-		cur_nonzero = self.sum_image[nonzero_values_ids]
+		cur_nonwhite = self.sum_image[nonwhite_px_ids]
 		# and values with corresponding indices on average image
-		av_nonzero = self.average_image[nonzero_values_ids]
-		averaged_pixels = 0.5 * (av_nonzero + cur_nonzero / self.batch_size)
+		av_nonwhite_px = self.average_image[nonwhite_px_ids]
+		averaged_pixels = 0.5 * (av_nonwhite_px + cur_nonwhite / self.batch_size)
 
 		# save average image in memory for next call
-		self.average_image[nonzero_values_ids] = averaged_pixels
+		self.average_image[nonwhite_px_ids] = averaged_pixels
 		self.average_image = self.average_image.astype(np.uint8)
 
 	def merge_to_one(self, image):
