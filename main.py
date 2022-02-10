@@ -52,7 +52,6 @@ def reconstruct_images(test_path, out_path):
 			pass
 
 
-
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Reconstruct missing parts on depth images of '
 												 'human faces. Run training or inference.')
